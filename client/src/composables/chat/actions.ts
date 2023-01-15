@@ -105,6 +105,9 @@ export async function connect(): Promise<void> {
 }
 
 export async function disconnect(): Promise<void> {
+  if (!isConnected.value) {
+    return (await router.push('/')) as void;
+  }
   Dialog.create({
     title: 'Disconnection Notification',
     message: 'Are you sure?',
