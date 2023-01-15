@@ -6,12 +6,20 @@
           flat
           dense
           round
-          icon="menu"
+          icon="home"
           aria-label="Menu"
-          @click="toggleLeftDrawer"
+          @click="chat.disconnect"
         />
 
-        <q-toolbar-title> Quasar App </q-toolbar-title>
+        <q-toolbar-title>
+          <q-breadcrumbs active-color="cyan-3">
+            <q-breadcrumbs-el>VueChat</q-breadcrumbs-el>
+            <q-breadcrumbs-el v-if="chat.isConnected">Rooms</q-breadcrumbs-el>
+            <q-breadcrumbs-el v-if="chat.isConnected && chat.user.room">{{
+              chat.user.room.label
+            }}</q-breadcrumbs-el>
+          </q-breadcrumbs>
+        </q-toolbar-title>
 
         <div>
           <q-chip
@@ -19,19 +27,35 @@
             :color="chat.isConnected ? 'positive' : 'negative'"
             >{{ chat.isConnected ? 'Connected' : 'Disconnected' }}</q-chip
           >
+          <span>
+            {{ chat.isConnected ? chat.user.name : 'Guest' }}
+          </span>
         </div>
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
+    <q-drawer
+      class="column items-center"
+      v-model="chat.isUsersListOpen"
+      show-if-above
+      bordered
+      side="right"
+      :overlay="false"
+      :persistent="false"
+      :key="$route.path"
+    >
+      <span class="text-h6"
+        >Connected Users
+        <span class="text-cyan-3"> {{ chat.usersList.length }}/999 </span>
+      </span>
+      <span
+        v-if="chat.isConnected && chat.user.room && chat.usersList.length === 0"
+        >No users.</span
+      >
       <q-list>
-        <q-item-label header> Essential Links </q-item-label>
-
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
+        <q-item class="text-cyan-3" v-for="username in chat.usersList">
+          {{ username }}
+        </q-item>
       </q-list>
     </q-drawer>
 
@@ -43,5 +67,6 @@
 
 <script setup lang="ts">
 import { useChat } from '../composables/chat';
+
 const chat = useChat();
 </script>

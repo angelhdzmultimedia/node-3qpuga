@@ -1,11 +1,15 @@
-import { NestFactory } from '@nestjs/core'
-import { AppModule } from './app.module'
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule)
-  app.enableCors({
-    origin: 'http://localhost:9000',
-  })
-  await app.listen(5000)
+if (import.meta.env.PROD) {
+  async function bootstrap() {
+    const app = await NestFactory.create(AppModule);
+    app.enableCors({
+      origin: 'http://localhost:9000',
+    });
+    await app.listen(5000);
+  }
+  bootstrap();
 }
-bootstrap()
+
+export const viteNodeApp = NestFactory.create(AppModule);

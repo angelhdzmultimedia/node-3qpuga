@@ -1,10 +1,25 @@
 <script setup lang="ts">
 import { useChat } from '../../composables/chat';
+
+definePage({
+  meta: {
+    requiresConnection: true,
+  },
+});
+
 const chat = useChat();
 </script>
 
 <template>
-  <div class="column items-center q-gutter-sm q-pt-md">
+  <div
+    class="
+      column
+      full-width full-height
+      items-center
+      justify-center
+      q-gutter-sm q-pt-md
+    "
+  >
     <span class="text-primary text-h4">Rooms</span>
     <div class="column q-gutter-sm">
       <q-btn

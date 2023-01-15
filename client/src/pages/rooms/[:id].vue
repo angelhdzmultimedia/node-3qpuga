@@ -2,6 +2,8 @@
 import { storeToRefs } from 'pinia';
 import { useChat } from 'src/composables/chat';
 import { definePage } from 'vue-router/auto';
+import { QInput } from 'quasar';
+import { onMounted, ref } from 'vue';
 
 definePage({
   meta: {
@@ -10,6 +12,11 @@ definePage({
 });
 
 const chat = useChat();
+const messageInputRef = ref<QInput>(null);
+
+onMounted(() => {
+  messageInputRef.value?.focus();
+});
 </script>
 
 <template>
@@ -17,6 +24,7 @@ const chat = useChat();
     <pre>
 TODO: Move back button to toolbar replacing Home Button for Navigate Back</pre
     >
+    <q-btn color="primary" @click="chat.toggleUsersList"> Users List </q-btn>
     <q-btn @click="chat.leaveRoom" color="primary">Back</q-btn>
     <q-card elevated class="full-width q-pa-md">
       <q-virtual-scroll
@@ -52,17 +60,20 @@ TODO: Move back button to toolbar replacing Home Button for Navigate Back</pre
           ]"
         >
           <q-item-section class="row">
-            <q-icon
-              size="1.5.em"
-              :color="message.color"
-              v-if="message.icon"
-              :name="message.icon"
-            ></q-icon>
-            <span>{{ message.content }}</span>
+            <span class="row items-center"
+              ><q-icon
+                size="1.5em"
+                :color="message.color"
+                v-if="message.icon"
+                :name="message.icon"
+              ></q-icon
+              >{{ message.content }}</span
+            >
           </q-item-section>
         </q-item>
       </q-virtual-scroll>
       <q-input
+        ref="messageInputRef"
         @keydown.enter="chat.sendMessage"
         v-model="chat.message"
         label="Message"

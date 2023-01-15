@@ -1,7 +1,6 @@
 <template>
   <div class="column full-height full-width items-center justify-center">
     <span class="text-h4 text-primary">Connection</span>
-    <pre>{{ chat.username }}</pre>
     <q-form @submit.prevent="chat.connect" class="q-gutter-sm">
       <q-input
         @keydown.enter="chat.connect"
