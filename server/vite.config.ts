@@ -3,15 +3,22 @@ import { VitePluginNode } from 'vite-plugin-node';
 
 export default defineConfig({
   // ...vite configures
+
   server: {
     // vite server configs, for details see \[vite doc\](https://vitejs.dev/config/#server-host)
-    port: 3000,
+
+    port: 5000,
+    cors: {
+      origin: 'http://localhost:9000',
+    },
+    
   },
   plugins: [
     ...VitePluginNode({
       // Nodejs native Request adapter
       // currently this plugin support 'express', 'nest', 'koa' and 'fastify' out of box,
       // you can also pass a function if you are using other frameworks, see Custom Adapter section
+
       adapter: 'nest',
       // tell the plugin where is your project entry
       appPath: './src/main.ts',
@@ -27,7 +34,9 @@ export default defineConfig({
       tsCompiler: 'esbuild',
     }),
   ],
+  
   optimizeDeps: {
+
     // Vite does not work well with optionnal dependencies,
     // mark them as ignored for now
     exclude: [
