@@ -1,0 +1,10 @@
+{
+  "name": "node-starter",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "pnpm -r dev",
+    "dev:client": "pnpm --filter client run dev",
+    "dev:serveṙ": "pnpm --filter server run dev"
+  },
+  "dependencies": {}
+}

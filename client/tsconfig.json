@@ -1,0 +1,16 @@
+{
+  "extends": "@quasar/app-vite/tsconfig-preset",
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "module": "ES2022",
+    "baseUrl": ".",
+    "types": ["vite-plugin-vue-layouts/client", "virtual:generated-layouts"]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.vue",
+    "typed-router.d.ts",
+    "vite-plugin-vue-layouts/client"
+  ]
+}
